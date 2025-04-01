@@ -1,0 +1,57 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      - POSTGRES_USER=postgres # should be postgres - other roles are not defined
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USER}" ]
+      interval: 1s
+      timeout: 1s
+      retries: 10
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: "redis:7.4.2-alpine"
+    volumes:
+      - redisdata:/var/lib/redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli ping" ]
+      interval: 1s
+      timeout: 1s
+      retries: 10
+
+  quik_trade:
+    tty: true
+    stdin_open: true
+    restart: always
+    build:
+      context: .
+    volumes:
+      - ./app:/code/app
+    command: bash -c "uvicorn app.api:app --port=8000 --host=0.0.0.0 --reload"
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=postgres
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - SECRET_KEY=${SECRET_KEY}
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+
+volumes:
+  pgdata: null
+  redisdata: null

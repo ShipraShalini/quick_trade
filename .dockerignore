@@ -1,0 +1,8 @@
+# Cache
+.cache
+.pytest_cache
+__pycache__
+
+# IDE
+.idea/
+.DS_Store
