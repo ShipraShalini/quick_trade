@@ -41,7 +41,7 @@ jobs:
       - name: Install dependencies
         run: |
           apt update && apt install build-essential -y
-          pip install -r requirements.txt -r requirements.dev.txt
+          pip install -r requirements.txt -r requirements-dev.txt
 
       - name: Run Tests
         run: pytest
