@@ -26,9 +26,9 @@ services:
     command: bash -c "uvicorn app.api:app --port=8000 --host=0.0.0.0 --reload"
     environment:
       - ENVIRONMENT=${ENVIRONMENT}
-      - DB_NAME=${DB_NAME}
+      - DB_NAME=tradedb
       - DB_USER=postgres
-      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PASSWORD=postgres
       - DB_HOST=postgres
       - DB_PORT=5432
       - SECRET_KEY=${SECRET_KEY}
