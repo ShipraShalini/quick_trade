@@ -6,7 +6,7 @@ on:
     paths:
       - app/**
       - tests/**
-      - .github/workflows/lint_n_test.yaml
+      - .github/workflows/ci.yaml
       - pyproject.toml
 
 jobs:
