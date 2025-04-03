@@ -7,6 +7,8 @@ from app.models.order import Order
 class OrderPlacementError(Exception):
     pass
 
+    """"""
+
 
 def place_order(order: Order):
     """dummy function that is symbolic standing for placing an order at the stock exchange.
@@ -16,9 +18,7 @@ def place_order(order: Order):
         raise ValueError("Required order parameter not provided")
 
     if random.random() >= 0.9:
-        raise OrderPlacementError(
-            "Failed to place order at stock exchange. Connection not available"
-        )
+        raise OrderPlacementError("Failed to place order at stock exchange. Connection not available")
 
     # it is an expensive operation
     time.sleep(0.5)

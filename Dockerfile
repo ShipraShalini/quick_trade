@@ -10,9 +10,12 @@ RUN apt update && apt install build-essential -y
 RUN pip install --no-cache-dir -U pip
 
 COPY ./requirements.txt .
-
-RUN pip install --no-cache-dir -r requirements.txt
+COPY ./setup.py .
 COPY ./app ./app
+
+RUN pip install --no-cache-dir -e .
+
+
 
 # Start with Uvicorn
 CMD ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "80", "--workers", "4" ]

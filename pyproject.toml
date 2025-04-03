@@ -1,0 +1,22 @@
+[tool.aerich]
+tortoise_orm = "app.settings.DB_CONFIG"
+location = "./migrations"
+src_folder = "./."
+
+[tool.black]
+line-length = 119
+exclude = '/venv|\.venv|env|ENV|env\.bak|venv\.bak/|migrations'
+
+[tool.isort]
+profile = "black"
+atomic = true
+ensure_newline_before_comments = true
+line_length = 119
+sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+  "ignore::DeprecationWarning",
+  "error::RuntimeWarning",
+  "error::pytest.PytestUnraisableExceptionWarning"
+]

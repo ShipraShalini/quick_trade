@@ -1,0 +1,48 @@
+name: Lint & Test
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - app/**
+      - tests/**
+      - .github/workflows/lint_n_test.yaml
+      - pyproject.toml
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    container: python:3.12-slim
+    env:
+      TEST_DB_USER: postgres
+      TEST_DB_HOST: postgres
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: secret
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          # This path is specific to Ubuntu
+          path: ~/.cache/pip
+          # Look to see if there is a cache hit for the corresponding requirements file
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: |
+          apt update && apt install build-essential -y
+          pip install -r requirements.txt -r requirements.dev.txt
+
+      - name: Run Tests
+        run: pytest
+

@@ -1,5 +1,7 @@
+aerich[toml]==0.8.2
 fastapi==0.115.12
 orjson==3.10.16
-pydantic==2.11.1
+# pydantic_model_creator is breaking in pydantic==2.11.1, so pinning to 2.10.0
+pydantic==2.10.0
 tortoise-orm[asyncpg]==0.24.2
 uvicorn[standard]==0.18.3

@@ -145,3 +145,4 @@ cython_debug/
 # IDE
 .idea/
 .DS_Store
+.qodo
