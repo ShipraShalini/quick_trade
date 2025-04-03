@@ -7,8 +7,6 @@ from app.models.order import Order
 class OrderPlacementError(Exception):
     pass
 
-    """"""
-
 
 def place_order(order: Order):
     """dummy function that is symbolic standing for placing an order at the stock exchange.

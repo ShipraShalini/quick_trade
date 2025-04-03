@@ -37,9 +37,16 @@ jobs:
         run: |
           apt update && apt install build-essential -y
           pip install -r requirements-dev.txt
-          pip install -e . 
-          
+          pip install -e .
+
+      - name: Lint with black
+        run: black --check .
+
+      - name: lint with isort
+        run: isort --check --profile=black .
+
+      - name: lint with flake8
+        run: autoflake  --remove-all-unused-imports --recursive --in-place .
 
       - name: Run Tests
-        run: pytest
-
+        run: pytest -s -v
