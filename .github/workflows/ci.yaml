@@ -3,11 +3,6 @@ name: Lint & Test
 on:
   workflow_dispatch:
   push:
-    paths:
-      - app/**
-      - tests/**
-      - .github/workflows/ci.yaml
-      - pyproject.toml
 
 jobs:
   build:
@@ -25,10 +20,10 @@ jobs:
           - 5432:5432
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Cache pip
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           # This path is specific to Ubuntu
           path: ~/.cache/pip
